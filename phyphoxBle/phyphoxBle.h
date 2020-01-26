@@ -34,8 +34,8 @@ class BleServer : public ble::Gap::EventHandler
 	const UUID customServiceUUID = UUID("cddf0001-30f7-4671-8b43-5e40ba53514a");
 	const UUID phyphoxUUID = UUID("cddf0002-30f7-4671-8b43-5e40ba53514a");
 	uint8_t data_package[20] = {0};
-	const char DEVICE_NAME[20] = "Ble";
-	const UUID dataOneUUID = UUID("59f51a40-8852-4abe-a50f-2d45e6bd51ac");
+	char DEVICE_NAME[20] = "Arduino";
+	UUID dataOneUUID = UUID("59f51a40-8852-4abe-a50f-2d45e6bd51ac");
 	
 	/*BLE stuff*/
 	BLE& ble = BLE::Instance(BLE::DEFAULT_INSTANCE);
@@ -75,6 +75,11 @@ class BleServer : public ble::Gap::EventHandler
 	
 	public:
 	BleServer() {};
+	BleServer(const char* s) {strcpy(DEVICE_NAME, s);};
+	BleServer(const char* s, const char* uuid) :dataOneUUID(UUID(uuid))
+	{
+		strcpy(DEVICE_NAME, s);	
+	}
 	/* TODO: add constructor with UUID input */
 	BleServer(const BleServer&) = delete; //there is no need to copy a BleServer once established
 	BleServer &operator=(const BleServer&) = delete; //there is no need to assign a BleServer to a BleServer
